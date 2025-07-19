@@ -1,0 +1,48 @@
+import("//build/templates/build_template.gni")
+
+build_rust("smoltcp") {
+  epoch = "0.12"
+  crate_type = "rlib"
+  sources = [ "//external/smoltcp/v0.12.0/src/lib.rs" ]
+  inputs = []
+  edition = "2021"
+  deps = [
+    "//external/bitflags/v1.3.2:bitflags",
+    "//external/byteorder/v1.5.0:byteorder",
+    "//external/cfg-if/v1.0.0:cfg_if",
+    "//external/heapless/v0.8.0:heapless",
+    "//external/managed/v0.8.0:managed",
+    "//kernel/kconfig:blueos_kconfig",
+  ]
+  features = [
+    "_proto-fragmentation",
+    "alloc",
+    "async",
+    "medium-ethernet",
+    "medium-ieee802154",
+    "medium-ip",
+    "multicast",
+    "packetmeta-id",
+    "proto-dhcpv4",
+    "proto-dns",
+    "proto-ipv4",
+    "proto-ipv4-fragmentation",
+    "proto-ipv6",
+    "proto-sixlowpan",
+    "proto-sixlowpan-fragmentation",
+    "socket",
+    "socket-dhcpv4",
+    "socket-dns",
+    "socket-icmp",
+    "socket-mdns",
+    "socket-raw",
+    "socket-tcp",
+    "socket-udp",
+  ]
+
+  cfgs = [ "use_blueos_kconfig" ]
+
+  rustflags = [
+    "--cap-lints=allow",  # Suppress all warnings in crates.io crates
+  ]
+}
